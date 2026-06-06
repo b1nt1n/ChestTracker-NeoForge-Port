@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "red.jackf.chesttracker.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "red.jackf.chesttracker.impl.mixinplugin.ChestTrackerMixinPlugin",
+  "client": [
+    "AbstractContainerScreenMixin",
+    "AbstractWidgetAccessor",
+    "BlockEntityTypeAccessor",
+    "BlockItemMixin",
+    "BlockMixin",
+    "ClientPacketListenerMixin",
+    "EditBoxAccessor",
+    "ScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
