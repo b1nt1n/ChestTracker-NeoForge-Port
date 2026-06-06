@@ -2,7 +2,7 @@
 
 Client-side item storage and searching for Minecraft 1.21.1 on NeoForge.
 
-This is an unofficial NeoForge 1.21.1 port of [Chest Tracker](https://modrinth.com/mod/chest-tracker) by JackFred. his project has been approved by the original author. If you use Fabric or Quilt, use the original project instead.
+This is an unofficial NeoForge 1.21.1 port of [Chest Tracker](https://modrinth.com/mod/chest-tracker) by JackFred. This project has been approved by the original author. If you use Fabric or Quilt, use the original project instead.
 
 ## What It Does
 
