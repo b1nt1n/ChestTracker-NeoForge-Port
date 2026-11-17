@@ -35,9 +35,9 @@ Known differences:
 - Fabric API is not required.
 - ModMenu integration is not included.
 - Litematica integration is not included.
-- Jade/WTHIT integration is not included.
-- Shulker Box Tooltip integration is not included.
-- Searchables integration is disabled in this build.
+- WTHIT integration is not included.
+
+Optional integrations are included for Jade, Searchables, and Shulker Box Tooltip.
 
 ## Building
 
@@ -48,7 +48,7 @@ Known differences:
 The built jar will be in:
 
 ```text
-build/libs/chesttracker-2.6.7+1.21.1-neoforge.jar
+build/libs/chesttracker-2.6.8+1.21.1-neoforge.jar
 ```
 
 ## Credits

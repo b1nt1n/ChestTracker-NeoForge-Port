@@ -52,6 +52,22 @@ public class InteractionTrackerImpl implements InteractionTracker {
         }
 
         @SubscribeEvent
+        public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+            Level level = event.getLevel();
+            if (event.getHand() == InteractionHand.MAIN_HAND && level instanceof ClientLevel clientLevel) {
+                INSTANCE.setLastBlockSource(new CachedClientBlockSource(clientLevel, event.getTarget().blockPosition()));
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+            Level level = event.getLevel();
+            if (event.getHand() == InteractionHand.MAIN_HAND && level instanceof ClientLevel clientLevel) {
+                INSTANCE.setLastBlockSource(new CachedClientBlockSource(clientLevel, event.getTarget().blockPosition()));
+            }
+        }
+
+        @SubscribeEvent
         public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
             INSTANCE.clear();
         }

@@ -29,6 +29,20 @@ repositories {
             includeGroup('maven.modrinth')
         }
     }
+    maven {
+        name = 'BlameJared'
+        url = uri('https://maven.blamejared.com')
+        content {
+            includeGroupAndSubgroups('com.blamejared.searchables')
+        }
+    }
+    maven {
+        name = 'MisterPeModder'
+        url = uri('https://maven.misterpemodder.com/libs-release/')
+        content {
+            includeGroupAndSubgroups('com.misterpemodder')
+        }
+    }
 }
 
 sourceSets.main.resources {
@@ -55,6 +69,15 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation "dev.isxander:yet-another-config-lib:3.5.0+1.21-neoforge"
     localRuntime "dev.isxander:yet-another-config-lib:3.5.0+1.21-neoforge"
+
+    compileOnly "maven.modrinth:jade:15.10.5+neoforge"
+    localRuntime "maven.modrinth:jade:15.10.5+neoforge"
+
+    compileOnly "com.blamejared.searchables:Searchables-neoforge-1.21.1:1.0.2"
+    localRuntime "com.blamejared.searchables:Searchables-neoforge-1.21.1:1.0.2"
+
+    compileOnly "com.misterpemodder:shulkerboxtooltip-neoforge:5.1.9+1.21.1"
+    localRuntime "com.misterpemodder:shulkerboxtooltip-neoforge:5.1.9+1.21.1"
 }
 
 tasks.withType(ProcessResources).configureEach {

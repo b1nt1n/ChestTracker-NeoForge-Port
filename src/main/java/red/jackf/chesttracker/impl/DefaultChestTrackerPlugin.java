@@ -107,23 +107,35 @@ public class DefaultChestTrackerPlugin implements ChestTrackerPlugin {
     }
 
     private static ResultHolder<DefaultProviderScreenClose.Result> defaultMemoryCreator(ServerProvider provider, ScreenCloseContext context) {
-        var cbs = InteractionTracker.INSTANCE.getLastBlockSource();
-        if (cbs.isEmpty()) return ResultHolder.pass();
+        var cbsOpt = InteractionTracker.INSTANCE.getLastBlockSource();
+        var memoryLocationOpt = cbsOpt.flatMap(provider::getMemoryLocation);
 
-        var memoryLocation = InteractionTracker.INSTANCE.getLastBlockSource().flatMap(provider::getMemoryLocation);
-        if (memoryLocation.isEmpty() || memoryLocation.get().isOverride()) return ResultHolder.pass();
+        if (cbsOpt.isEmpty() || memoryLocationOpt.isEmpty() || memoryLocationOpt.get().isOverride()) {
+            var player = net.minecraft.client.Minecraft.getInstance().player;
+            if (player == null) return ResultHolder.pass();
+            var currentKey = red.jackf.chesttracker.api.providers.ProviderUtils.getPlayersCurrentKey();
+            if (currentKey.isEmpty()) return ResultHolder.pass();
 
-        List<BlockPos> connectedBlocks = ConnectedBlocksGrabber.getConnected(cbs.get().level(), cbs.get()
-                .blockState(), cbs.get().pos());
+            BlockPos rootPos = cbsOpt.map(red.jackf.chesttracker.api.ClientBlockSource::pos).orElseGet(player::blockPosition);
+
+            return ResultHolder.value(MemoryBuilder.create(context.getItems())
+                    .withCustomName(context.getCustomTitle().orElse(null))
+                    .inContainer(net.minecraft.world.level.block.Blocks.CHEST)
+                    .toResult(currentKey.get(), rootPos));
+        }
+
+        var cbs = cbsOpt.get();
+        var memoryLocation = memoryLocationOpt.get();
+        List<BlockPos> connectedBlocks = ConnectedBlocksGrabber.getConnected(cbs.level(), cbs.blockState(), cbs.pos());
         BlockPos rootPos = connectedBlocks.get(0);
 
         return ResultHolder.value(MemoryBuilder.create(context.getItems())
                 .withCustomName(context.getCustomTitle().orElse(null))
-                .inContainer(cbs.get().blockState().getBlock())
+                .inContainer(cbs.blockState().getBlock())
                 .otherPositions(connectedBlocks.stream()
                         .filter(pos -> !pos.equals(rootPos))
                         .toList())
-                .toResult(memoryLocation.get().memoryKey(), rootPos));
+                .toResult(memoryLocation.memoryKey(), rootPos));
     }
 
     private ResultHolder<DefaultProviderScreenClose.Result> enderChestMemoryCreator(ServerProvider provider, ScreenCloseContext context) {

@@ -45,6 +45,14 @@ public class ChestTracker {
         modEventBus.addListener(ChestTracker::registerKeyMappings);
         NeoForge.EVENT_BUS.register(ClientEventHandler.class);
         NeoForge.EVENT_BUS.register(ScreenEventHandler.class);
+
+        if (net.neoforged.fml.ModList.get().isLoaded("shulkerboxtooltip")) {
+            registerShulkerBoxTooltip();
+        }
+    }
+
+    private void registerShulkerBoxTooltip() {
+        net.neoforged.fml.ModLoadingContext.get().registerExtensionPoint(com.misterpemodder.shulkerboxtooltip.api.neoforge.ShulkerBoxTooltipPlugin.class, () -> new com.misterpemodder.shulkerboxtooltip.api.neoforge.ShulkerBoxTooltipPlugin(red.jackf.chesttracker.impl.compat.mods.shulkerboxtooltip.ChestTrackerShulkerBoxTooltip::new));
     }
 
     public static ResourceLocation id(String path) {
